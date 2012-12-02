@@ -6,8 +6,14 @@ This configuration includes all vim extensions and some basic .vimrc file used b
 
 Installation
 ================
-1. Clone this repository to your home directory as .vim directory
+1. Clone this repository to your home directory as .vim directory. 
+`git clone .vim
+`
 2. Initialize and update modules
-3. Link .vimrc from repository to your local .vimrc file
+`cd ~/.vim
+ git submodule init
+ git submodule update`
+3. Link .vimrc from repository to your local .vimrc file (please make sure it doesn't exist).
+`ln ~/.vim/vimrc ~/.vimrc`
 4. Follow commandt module configuration procedure (you need to compile ruby extensions).
 5. In this moment, you are ready to go :)
