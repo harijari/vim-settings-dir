@@ -21,4 +21,4 @@ Installation
     `ln ~/.vim/vimrc ~/.vimrc;`
     
 4. Follow commandt module configuration procedure (you need to compile ruby extensions).
-5. In this moment, you are ready to go :)
+5. At this moment, you are ready to go :)
