@@ -1,3 +1,6 @@
+" Following lines added by drush vimrc-install on Fri, 30 Nov 2012 15:28:00 +0000.
+set nocompatible
+
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
 " /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
 " you can find below.  If you wish to change any of those settings, you should
@@ -76,6 +79,7 @@ set number
 let g:syntastic_phpcs_conf="--standard=Drupal"
 let g:CommandTMaxFiles=20000
 let g:CommandTMaxDepth=25
+call pathogen#infect('~/.vim/bundle/drupalvim/bundle')
 call pathogen#infect()
 
 
