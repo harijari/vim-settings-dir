@@ -30,6 +30,6 @@ Please refer to scripts documentation in order to learn how to use it.
 Few shortcuts
 
     CTRL+ALT+a - fuzzy search all loaded tags (ie php variables and functions/methods).
-    CTRL+ALT+r - open resource by name
+    CTRL+ALT+f - open resource by name
     CTRL+ALT+b - fuzzy search all opened buffers
     CTRL+ALT+c - fuzzy search of all recent changes
