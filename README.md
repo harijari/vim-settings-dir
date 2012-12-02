@@ -33,3 +33,4 @@ Few shortcuts
     CTRL+ALT+f - open resource by name
     CTRL+ALT+b - fuzzy search all opened buffers
     CTRL+ALT+c - fuzzy search of all recent changes
+    CTRL+ALT+o - fuzzy search of tags in current buffer
