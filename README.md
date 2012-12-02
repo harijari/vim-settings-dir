@@ -22,3 +22,14 @@ Installation
     
 4. Follow commandt module configuration procedure (you need to compile ruby extensions).
 5. At this moment, you are ready to go :)
+
+
+Usage
+=================
+Please refer to scripts documentation in order to learn how to use it.
+Few shortcuts
+
+    CTRL+ALT+a - fuzzy search all loaded tags (ie php variables and functions/methods).
+    CTRL+ALT+r - open resource by name
+    CTRL+ALT+b - fuzzy search all opened buffers
+    CTRL+ALT+c - fuzzy search of all recent changes
