@@ -46,3 +46,24 @@
 [submodule "bundle/vim-latex"]
 	path = bundle/vim-latex
 	url = git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+[submodule "bundle/airline"]
+	path = bundle/airline
+	url = https://github.com/bling/vim-airline
+[submodule "bundle/matchit"]
+	path = bundle/matchit
+	url = https://github.com/tmhedberg/matchit
+[submodule "bundle/phpcomplete"]
+	path = bundle/phpcomplete
+	url = https://github.com/shawncplus/phpcomplete.vim.git
+[submodule "bundle/phpcomplete-shwn"]
+	path = bundle/phpcomplete-shwn
+	url = https://github.com/shawncplus/phpcomplete.vim.git
+[submodule "bundle/vim-symfony"]
+	path = bundle/vim-symfony
+	url = https://github.com/docteurklein/vim-symfony
+[submodule "bundle/vim-autotag"]
+	path = bundle/vim-autotag
+	url = https://github.com/craigemery/vim-autotag
+[submodule "bundle/vim-php-namespace"]
+	path = bundle/vim-php-namespace
+	url = https://github.com/arnaud-lb/vim-php-namespace
