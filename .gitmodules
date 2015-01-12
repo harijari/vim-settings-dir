@@ -67,3 +67,12 @@
 [submodule "bundle/vim-php-namespace"]
 	path = bundle/vim-php-namespace
 	url = https://github.com/arnaud-lb/vim-php-namespace
+[submodule "bundle/phpfolding"]
+	path = bundle/phpfolding
+	url = https://github.com/vim-scripts/phpfolding.vim
+[submodule "bundle/php-getter-setter"]
+	path = bundle/php-getter-setter
+	url = https://github.com/docteurklein/php-getter-setter.vim.git
+[submodule "bundle/YouCompleteMe"]
+	path = bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe
