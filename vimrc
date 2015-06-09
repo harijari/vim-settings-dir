@@ -75,9 +75,12 @@ set list
 set number
 set laststatus=2
 
-let g:CommandTMaxFiles=20000
+let g:CommandTMaxFiles=40000
 let g:CommandTMaxDepth=25
 call pathogen#infect()
 
 
 colorscheme wombat
+
+
+let g:gitgutter_max_signs=5000
