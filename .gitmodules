@@ -88,3 +88,12 @@
 [submodule "bundle/vim-markdown"]
 	path = bundle/vim-markdown
 	url = https://github.com/tpope/vim-markdown
+[submodule "bundle/vim-tern"]
+	path = bundle/vim-tern
+	url = https://github.com/marijnh/tern_for_vim
+[submodule "bundle/unite-outline"]
+	path = bundle/unite-outline
+	url = https://github.com/Shougo/unite-outline
+[submodule "bundle/unite"]
+	path = bundle/unite
+	url = https://github.com/Shougo/unite.vim
