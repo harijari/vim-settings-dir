@@ -95,3 +95,42 @@
 [submodule "bundle/unite"]
 	path = bundle/unite
 	url = https://github.com/Shougo/unite.vim
+[submodule "bundle/YouCompleteMe"]
+	path = bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe
+[submodule "bundle/vim-json"]
+	path = bundle/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "bundle/vim-twig"]
+	path = bundle/vim-twig
+	url = https://github.com/evidens/vim-twig.git
+[submodule "bundle/vim-less"]
+	path = bundle/vim-less
+	url = https://github.com/groenewege/vim-less
+[submodule "bundle/vim-pasta"]
+	path = bundle/vim-pasta
+	url = https://github.com/sickill/vim-pasta
+[submodule "bundle/vim-javascript"]
+	path = bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
+[submodule "bundle/vim-php-cs-fixer"]
+	path = bundle/vim-php-cs-fixer
+	url = https://github.com/stephpy/vim-php-cs-fixer
+[submodule "bundle/vim-yaml"]
+	path = bundle/vim-yaml
+	url = https://github.com/stephpy/vim-yaml
+[submodule "bundle/twig-indent"]
+	path = bundle/twig-indent
+	url = https://github.com/tokutake/twig-indent
+[submodule "bundle/phpcomplete-extended-symfony"]
+	path = bundle/phpcomplete-extended-symfony
+	url = https://github.com/m2mdas/phpcomplete-extended-symfony
+[submodule "/home/jsobiecki/.vim/bundle/phpcomplete-extended"]
+	path = /home/jsobiecki/.vim/bundle/phpcomplete-extended
+	url = https://github.com/m2mdas/phpcomplete-extended.git
+[submodule "bundle/vim-colorsque"]
+	path = bundle/vim-colorsque
+	url = https://github.com/gorodinskiy/vim-coloresque
+[submodule "bundle/padawan/bundle/padawan"]
+	path = bundle/padawan/bundle/padawan
+	url = https://github.com/mkusher/padawan.vim
