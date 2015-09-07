@@ -74,8 +74,6 @@
 	path = bundle/php-getter-setter
 	url = https://github.com/docteurklein/php-getter-setter.vim.git
 [submodule "bundle/YouCompleteMe"]
-	path = bundle/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe
 [submodule "bundle/vim-behat"]
 	path = bundle/vim-behat
 	url = git://github.com/veloce/vim-behat.git

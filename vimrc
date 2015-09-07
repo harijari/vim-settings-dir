@@ -84,3 +84,4 @@ colorscheme wombat
 
 
 let g:gitgutter_max_signs=5000
+let g:EclimCompletionMethod = 'omnifunc'
