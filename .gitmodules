@@ -37,9 +37,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar
-[submodule "bundle/snipmate"]
-	path = bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -134,3 +131,9 @@
 [submodule "bundle/padawan/bundle/padawan"]
 	path = bundle/padawan/bundle/padawan
 	url = https://github.com/mkusher/padawan.vim
+[submodule "bundle/padawan"]
+	path = bundle/padawan
+	url = https://github.com/mkusher/padawan.vim
+[submodule "bundle/vim-snippets"]
+	path = bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets
