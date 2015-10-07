@@ -74,6 +74,8 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 set list
 set number
 set laststatus=2
+set et
+set sw=4
 
 let g:CommandTMaxFiles=40000
 let g:CommandTMaxDepth=25
@@ -85,3 +87,5 @@ colorscheme wombat
 
 let g:gitgutter_max_signs=5000
 let g:EclimCompletionMethod = 'omnifunc'
+let did_padawan_autoload=1
+let g:padawan#enabled=0
