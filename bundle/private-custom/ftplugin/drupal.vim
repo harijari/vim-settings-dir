@@ -29,4 +29,4 @@ let b:phpgetset_setterTemplate =
 \ "        $this->%varname% = $%varname%;\n" .
 \ "    }"
 
-map <unique> <buffer> <LocalLeader>z <Plug>PhpgetsetInsertBothGetterSetter
+"map <unique> <buffer> <LocalLeader>z <Plug>PhpgetsetInsertBothGetterSetter

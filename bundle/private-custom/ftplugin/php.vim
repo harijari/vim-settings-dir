@@ -1,5 +1,5 @@
-inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
-noremap <Leader>u :call PhpInsertUse()<CR>
+inoremap <Leader>pu:call PhpInsertUse()<CR>
+noremap <Leader>pu :call PhpInsertUse()<CR>
 "inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
 "noremap <Leader>e :call PhpExpandClass()<CR>
 "map <F5> <Esc>:EnableFastPHPFolds<Cr>
@@ -33,4 +33,9 @@ let s:phpgetset_setterTemplate =
 \ "        $this->%varname% = $%varname%;\n" .
 \ "    }"
 
-map <unique> <buffer> <LocalLeader>o <Plug>PhpgetsetInsertBothGetterSetter
+"map <unique> <buffer> <LocalLeader>o <Plug>PhpgetsetInsertBothGetterSetter
+
+
+let g:ycm_semantic_triggers = {}
+let g:ycm_semantic_triggers.php =
+\ ['->', '::', '(', 'use ', 'namespace ', '\']

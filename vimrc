@@ -1,3 +1,8 @@
+" Following lines added by drush vimrc-install on Tue, 13 Oct 2015 10:08:42 +0000.
+set nocompatible
+call pathogen#infect('/home/jsobiecki/.drush/vimrc/bundle')
+call pathogen#infect('/home/jsobiecki/.vim/bundle')
+" End of vimrc-install additions.
 
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
 " /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
@@ -61,12 +66,11 @@ syntax on
 
 " Bunch of mappings
 nnoremap <silent> <F9> :TagbarToggle<CR>
-nnoremap <silent> <C-A-o> :FufBufferTag<CR>
-nnoremap <silent> <C-A-b> :FufBuffer<CR>
-nnoremap <silent> <C-A-a> :FufTag<CR>
-nnoremap <silent> <C-A-f> :CommandT<CR>
-nnoremap <silent> <C-A-c> :FufChangeList<CR>
-nnoremap <F12> :NERDTree
+nnoremap <silent> <leader>fo :FufBufferTag<CR>
+nnoremap <silent> <leader>fb :FufBuffer<CR>
+nnoremap <silent> <leader>ft :FufTag<CR>
+nnoremap <silent> <leader>fcl :FufChangeList<CR>
+nnoremap <F12> :NERDTree<CR>
 let g:EclimPhpHtmlValidate=0
 let g:EclimPhpValidate=0
 

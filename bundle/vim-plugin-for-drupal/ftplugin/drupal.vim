@@ -58,14 +58,25 @@ if &ft =~ '\<php\>'
 
   " Syntastic settings, adapted from
   " echodittolabs.org/drupal-coding-standards-vim-code-sniffer-syntastic-regex
-  if exists('loaded_syntastic_plugin') && executable('phpcs')
-    let g:syntastic_phpcs_conf = ' --standard=Drupal ' . drupaldetect#php_ext
+  if exists('loaded_syntastic_plugin') && strlen(drupal#phpcs_exec)
+    let g:syntastic_php_phpcs_exec = drupal#phpcs_exec
+    let g:syntastic_php_phpcs_args = drupal#phpcs_args
   endif
 
   " Cf. comment on 'tags':  'ignorecase' is global.
   let s:undo_ftplugin .= ' ignorecase< comments<'
 endif
 " }}} PHP specific settings.
+
+" Vdebug settings. {{{
+if !exists('g:vdebug_features')
+  let g:vdebug_features = {}
+endif
+" Useful for Drupal's deeply nested arrays.
+if !exists('g:vdebug_features.max_children') || g:vdebug_features.max_children < 128
+  let g:vdebug_features.max_children = 128
+endif
+" }}} Vdebug settings.
 
 setl autoindent              "Auto indent based on previous line
 setl expandtab               "Tab key inserts spaces

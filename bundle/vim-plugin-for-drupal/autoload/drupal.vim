@@ -86,11 +86,17 @@ endfunction " }}} }}}
 " - @var $DRUPAL_ROOT
 "   Set this environment variable from b:Drupal_info.DRUPAL_ROOT.
 " - SnipMate settings
-let s:snip_path = expand('<sfile>:p:h:h') . '/snipmate/drupal'
+let s:snip_path = expand('<sfile>:p:h:h') . '/snippets/drupal'
 function! drupal#BufEnter() " {{{
   if strlen(b:Drupal_info.DRUPAL_ROOT)
     let $DRUPAL_ROOT = b:Drupal_info.DRUPAL_ROOT
   endif
+  " Garbas' snipmate is already aware of version-indepedent snippets
+  " so we load the scope for the version-dependent snippets.
+  if strlen(b:Drupal_info.CORE) && exists(':SnipMateLoadScope')
+    exec 'SnipMateLoadScope drupal' . b:Drupal_info.CORE
+  endif
+  " Load snippets for the snipmate version on vimscripts.
   if exists('*ExtractSnips')
     call ResetSnippets('drupal')
     " Load the version-independent snippets.
@@ -103,8 +109,8 @@ function! drupal#BufEnter() " {{{
     if strlen(b:Drupal_info.CORE)
       let snip_path = s:snip_path . b:Drupal_info.CORE . '/'
       for ft in split(&ft, '\.')
-	call ExtractSnips(snip_path . ft, 'drupal')
-	call ExtractSnipsFile(snip_path . ft . '.snippets', 'drupal')
+        call ExtractSnips(snip_path . ft, 'drupal')
+        call ExtractSnipsFile(snip_path . ft . '.snippets', 'drupal')
       endfor
     endif " strlen(b:Drupal_info.CORE)
   endif " exists('*ExtractSnips')
@@ -137,20 +143,74 @@ function drupal#OpenURL(base) " {{{
   call system(open . ' ' . url . shellescape(func))
 endfun " }}} }}}
 
+" function! s:FindPath(dirs, subpath, condition) " {{{
+" Utility function:  find a path satisfying a condition
+" @param
+"   List dirs: each entry is a String representing a directory, ending in '/'
+"   String subpath: a subpath to look for inside each directory
+"   String condition: a condition to be evaluated on path = directory . subpath
+" @return String
+"   The path satisfying the condition, '' if none is found.
+function! s:FindPath(dirs, subpath, condition) " {{{
+  for dir in a:dirs
+    let path = dir . a:subpath
+    execute 'let success =' a:condition
+    if success
+      return path
+    endif
+  endfor
+  return ''
+endfun  " }}} }}}
+
 " @function! drupal#CtagsPath() " {{{
 " Return path to exuberant ctags, or '' if not found.
 function! drupal#CtagsPath() " {{{
   let dirs = ['', '/usr/bin/', '/usr/local/bin/']
-  for dir in dirs
-    if executable(dir . 'ctags')
-      if system(dir . 'ctags --version') =~ 'Exuberant Ctags'
-        return dir . 'ctags'
-      endif
-    endif
-  endfor
-  return ''
+  let condition = 'executable(path) && system(path --version) =~ "Exuberant Ctags"'
+  return s:FindPath(dirs, 'ctags', condition)
 endfun
 " }}} }}}
+
+" @function! drupal#PhpcsPath() " {{{
+" Return path to phpcs (PHP CodeSniffer), or '' if not found.
+function! drupal#PhpcsPath() " {{{
+  let dirs = ['', $HOME . '/.composer/vendor/bin/', '/usr/local/bin/']
+  return s:FindPath(dirs, 'phpcs', 'executable(path)')
+endfun
+" }}} }}}
+let drupal#phpcs_exec = drupal#PhpcsPath()
+
+" @function! drupal#CodeSnifferPath() " {{{
+" Return path to Drupal standards for PHP CodeSniffer, or '' if not found.
+function! drupal#CodeSnifferPath() " {{{
+  " First check whether phpcs already knows about Drupal. If so, then return
+  " 'Drupal' instead of a complete path.
+  let standard = matchstr(system(g:drupal#phpcs_exec . ' -i'), '\c\<Drupal\>')
+  if strlen(standard)
+    return standard
+  endif
+  " Next, look for the Drupal standards in the locations corresponding to the
+  " instructions for installing the Coder module:
+  " https://www.drupal.org/node/1419988
+  let dirs = [$HOME . '/.composer/vendor/drupal/', $HOME . '/.drush/']
+  return s:FindPath(dirs, 'coder/coder_sniffer/Drupal', 'isdirectory(path)')
+endfun
+" }}} }}}
+let drupal#codesniffer_standard = drupal#CodeSnifferPath()
+
+" @function! drupal#PhpcsArgs() " {{{
+" Return the arguments that should be added to phpcs.
+function! drupal#PhpcsArgs() " {{{
+  let args = {
+	\ 'standard': g:drupal#codesniffer_standard,
+	\ 'report': 'csv',
+	\ 'extensions': g:drupaldetect#php_ext
+	\ }
+  call filter(args, 'strlen(v:val)')
+  return join(map(items(args), '"--" . v:val[0] . "=" . v:val[1]'))
+endfun
+" }}} }}}
+let drupal#phpcs_args = drupal#PhpcsArgs()
 
 " @function! drupal#TagGen(type)" {{{
 " Invoke ctags via drush, either for the current project or for the Drupal
@@ -203,11 +263,13 @@ function! drupal#DrupalInfo() " {{{
   if info.CORE == '' && info.DRUPAL_ROOT != ''
     let INFO_FILE = info.DRUPAL_ROOT . '/modules/system/system.info'
     if filereadable(INFO_FILE)
+      " Looks like we are dealing with Drupal 6/7.
       let info.CORE = drupaldetect#CoreVersion(INFO_FILE)
     else
-      let INFO_FILE = info.DRUPAL_ROOT . '/core/modules/system/system.info'
+      let INFO_FILE = info.DRUPAL_ROOT . '/core/modules/system/system.info.yml'
       if filereadable(INFO_FILE)
-	let info.CORE = drupaldetect#CoreVersion(INFO_FILE)
+        " Looks like we are dealing with Drupal 8.
+        let info.CORE = drupaldetect#CoreVersion(INFO_FILE)
       endif
     endif
   elseif info.DRUPAL_ROOT == '' && info.CORE != ''  && exists('g:Drupal_dirs')
@@ -239,7 +301,8 @@ endif
 endfun " }}} }}}
 
 " @function drupal#IniType(info_path) {{{
-" Find the type (module, theme, make) by parsing the path.
+" Find the type (module, theme, make) by parsing the path. For D8, first try
+" parsing the .info.yml file.
 "
 " @param info_path
 "   A string representing the path to the .info file.
@@ -249,30 +312,37 @@ endfun " }}} }}}
 "
 " @todo:  How do we recognize a Profiler .info file?
 function! drupal#IniType(info_path) " {{{
+  " Determine make files by their extensions. Parse .yml files.
   let ext = fnamemodify(a:info_path, ':e')
   if ext == 'make' || ext == 'build'
     return 'make'
-  else
-    " Borrowed from autoload/pathogen.vim:
-    let slash = !exists("+shellslash") || &shellslash ? '/' : '\'
-    " If the extension is not 'info' at this point, I do not know how we got
-    " here.
-    let m_index = strridx(a:info_path, slash . 'modules' . slash)
-    let t_index = strridx(a:info_path, slash . 'themes' . slash)
-    " If neither matches, try a case-insensitive search.
-    if m_index == -1 && t_index == -1
-      let m_index = matchend(a:info_path, '\c.*\' . slash . 'modules\' . slash)
-      let t_index = matchend(a:info_path, '\c.*\' . slash . 'themes\' . slash)
+  elseif ext == 'yml'
+    let type = drupaldetect#ParseInfo(a:info_path, 'type', 'yml')
+    if strlen(type)
+      return type
     endif
-    if m_index > t_index
-      return 'module'
-    elseif m_index < t_index
-      return 'theme'
-    endif
-    " We are not inside a themes/ directory, nor a modules/ directory.  Do not
-    " guess.
-    return ''
   endif
+
+  " If we are not done yet, then parse the path.
+  " Borrowed from autoload/pathogen.vim:
+  let slash = !exists("+shellslash") || &shellslash ? '/' : '\'
+  " If the extension is not 'info' at this point, I do not know how we got
+  " here.
+  let m_index = strridx(a:info_path, slash . 'modules' . slash)
+  let t_index = strridx(a:info_path, slash . 'themes' . slash)
+  " If neither matches, try a case-insensitive search.
+  if m_index == -1 && t_index == -1
+    let m_index = matchend(a:info_path, '\c.*\' . slash . 'modules\' . slash)
+    let t_index = matchend(a:info_path, '\c.*\' . slash . 'themes\' . slash)
+  endif
+  if m_index > t_index
+    return 'module'
+  elseif m_index < t_index
+    return 'theme'
+  endif
+  " We are not inside a themes/ directory, nor a modules/ directory.  Do not
+  " guess.
+  return ''
 endfun " }}} }}}
 
 " @function! drupal#SetDrupalRoot() " {{{
