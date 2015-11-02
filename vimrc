@@ -1,8 +1,104 @@
-" Following lines added by drush vimrc-install on Tue, 13 Oct 2015 10:08:42 +0000.
+" Following lines added by drush vimrc-install on Sun, 01 Nov 2015 18:13:43 +0000.
 set nocompatible
 call pathogen#infect('/home/jsobiecki/.drush/vimrc/bundle')
 call pathogen#infect('/home/jsobiecki/.vim/bundle')
-" End of vimrc-install additions.
+
+set rtp+=~/.vim/bundle/vundle
+
+" Vundle package manager
+call vundle#begin('~/.vim/Vundle/')
+
+" PHP
+" Plugin 'https://github.com/m2mdas/phpcomplete-extended-symfony'
+" Plugin 'https://github.com/m2mdas/phpcomplete-extended.git'
+Plugin 'https://github.com/arnaud-lb/vim-php-namespace'
+Plugin 'https://github.com/stephpy/vim-php-cs-fixer'
+Plugin 'https://github.com/docteurklein/vim-symfony'
+" Plugin 'https://github.com/mkusher/padawan.vim'
+"Plugin 'https://github.com/vim-scripts/phpfolding.vim'
+Plugin 'https://github.com/shawncplus/phpcomplete.vim.git'
+Plugin 'vim-php/vim-php-refactoring'
+
+" Drupal
+"Plugin 'http://git.drupal.org/project/vimrc.git', {'name': 'drupal-vim', 'rtp': 'bundle/vim-plugin-for-drupal' }
+
+" YaML
+Plugin 'https://github.com/stephpy/vim-yaml'
+
+" HTML
+Plugin 'https://github.com/othree/html5.vim'
+Plugin 'https://github.com/mattn/emmet-vim'
+
+" Latex
+Plugin 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+
+
+" Javascript
+Plugin 'https://github.com/marijnh/tern_for_vim'
+Plugin 'https://github.com/pangloss/vim-javascript'
+
+" Git and friends
+Plugin 'https://github.com/airblade/vim-gitgutter'
+Plugin 'https://github.com/tpope/vim-fugitive.git'
+Plugin 'tommcdo/vim-fugitive-blame-ext'
+" Plugin 'https://github.com/vim-scripts/vcscommand.vim'
+
+" QA
+Plugin 'https://github.com/joonty/vdebug'
+Plugin 'https://github.com/scrooloose/syntastic.git'
+
+" Behat
+"Plugin 'Behat/Behat'
+
+" Sass / SCSS
+Plugin 'https://github.com/gorodinskiy/vim-coloresque'
+Plugin 'https://github.com/groenewege/vim-less'
+Plugin 'tpope/vim-haml'
+
+" Markdown
+Plugin 'https://github.com/tpope/vim-markdown'
+
+" Code search / navigation
+Plugin 'https://github.com/Shougo/unite-outline'
+Plugin 'https://github.com/Shougo/unite.vim'
+Plugin 'tsukkee/unite-tag'
+" Plugin 'kien/ctrlp.vim'
+ Plugin 'git://github.com/harijari/FuzzyFinder.git'
+ Plugin 'https://github.com/wincent/Command-T'
+Plugin 'https://github.com/scrooloose/nerdtree'
+" Plugin 'https://github.com/majutsushi/tagbar'
+
+" Twig
+Plugin 'https://github.com/evidens/vim-twig.git'
+Plugin 'https://github.com/tokutake/twig-indent'
+
+" Json
+Plugin 'https://github.com/elzr/vim-json.git'
+
+" Text edit
+Plugin 'https://github.com/scrooloose/nerdcommenter'
+Plugin 'https://github.com/tmhedberg/matchit'
+Plugin 'https://github.com/terryma/vim-multiple-cursors'
+Plugin 'https://github.com/sickill/vim-pasta'
+Plugin 'https://github.com/garbas/vim-snipmate'
+" Plugin 'https://github.com/honza/vim-snippets'
+
+" Misc
+Plugin 'https://github.com/bling/vim-airline'
+Plugin 'https://github.com/embear/vim-localvimrc'
+Plugin 'https://github.com/vim-scripts/Wombat.git'
+Plugin 'https://github.com/vim-scripts/L9'
+Plugin 'https://github.com/tomtom/tlib_vim.git'
+Plugin 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+Plugin 'https://github.com/Valloric/YouCompleteMe'
+Plugin 'https://github.com/craigemery/vim-autotag'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'Shougo/vimproc.vim'
+
+call vundle#end()
+filetype plugin indent on
+filetype plugin on
 
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
 " /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
@@ -14,7 +110,7 @@ call pathogen#infect('/home/jsobiecki/.vim/bundle')
 
 " This line should not be removed as it ensures that various options are
 " properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
+" runtime! debian.vim
 
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
@@ -31,46 +127,20 @@ d
 " turn on this option as well
 set background=dark
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
-if has("autocmd")
-  filetype plugin indent on
-endif
-
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set incsearch		" Incremental search
-set autowrite		" Automatically save before commands like :next and :make
-set hidden             " Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes)
-
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
-
 
 set cc=81
 syntax on
 
 
+" Setup unite plugin
+"
 " Bunch of mappings
 nnoremap <silent> <F9> :TagbarToggle<CR>
-nnoremap <silent> <leader>fo :FufBufferTag<CR>
-nnoremap <silent> <leader>fb :FufBuffer<CR>
-nnoremap <silent> <leader>ft :FufTag<CR>
+nnoremap <silent> <leader>fo :Unite outline -start-insert<CR>
+nnoremap <silent> <leader>fb :Unite buffer -start-insert<CR>
+nnoremap <silent> <leader>ft :Unite tag -start-insert<CR>
 nnoremap <silent> <leader>fcl :FufChangeList<CR>
-nnoremap <F12> :NERDTree<CR>
+nnoremap <F12> :NERDTreeToggle<CR>
 let g:EclimPhpHtmlValidate=0
 let g:EclimPhpValidate=0
 
@@ -83,7 +153,6 @@ set sw=4
 
 let g:CommandTMaxFiles=40000
 let g:CommandTMaxDepth=25
-call pathogen#infect()
 
 
 colorscheme wombat
@@ -93,3 +162,8 @@ let g:gitgutter_max_signs=5000
 let g:EclimCompletionMethod = 'omnifunc'
 let did_padawan_autoload=1
 let g:padawan#enabled=0
+
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
