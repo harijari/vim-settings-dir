@@ -18,6 +18,7 @@ Plugin 'https://github.com/docteurklein/vim-symfony'
 "Plugin 'https://github.com/vim-scripts/phpfolding.vim'
 Plugin 'https://github.com/shawncplus/phpcomplete.vim.git'
 Plugin 'vim-php/vim-php-refactoring'
+Plugin 'vim-php/tagbar-phpctags.vim'
 
 " Drupal
 "Plugin 'http://git.drupal.org/project/vimrc.git', {'name': 'drupal-vim', 'rtp': 'bundle/vim-plugin-for-drupal' }
@@ -41,6 +42,9 @@ Plugin 'https://github.com/pangloss/vim-javascript'
 Plugin 'https://github.com/airblade/vim-gitgutter'
 Plugin 'https://github.com/tpope/vim-fugitive.git'
 Plugin 'tommcdo/vim-fugitive-blame-ext'
+Plugin 'gregsexton/gitv'
+
+
 " Plugin 'https://github.com/vim-scripts/vcscommand.vim'
 
 " QA
@@ -62,11 +66,11 @@ Plugin 'https://github.com/tpope/vim-markdown'
 Plugin 'https://github.com/Shougo/unite-outline'
 Plugin 'https://github.com/Shougo/unite.vim'
 Plugin 'tsukkee/unite-tag'
-" Plugin 'kien/ctrlp.vim'
- Plugin 'git://github.com/harijari/FuzzyFinder.git'
- Plugin 'https://github.com/wincent/Command-T'
+Plugin 'kien/ctrlp.vim'
+" Plugin 'git://github.com/harijari/FuzzyFinder.git'
+Plugin 'https://github.com/wincent/Command-T'
 Plugin 'https://github.com/scrooloose/nerdtree'
-" Plugin 'https://github.com/majutsushi/tagbar'
+Plugin 'https://github.com/majutsushi/tagbar'
 
 " Twig
 Plugin 'https://github.com/evidens/vim-twig.git'
@@ -90,11 +94,16 @@ Plugin 'https://github.com/vim-scripts/Wombat.git'
 Plugin 'https://github.com/vim-scripts/L9'
 Plugin 'https://github.com/tomtom/tlib_vim.git'
 Plugin 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
-Plugin 'https://github.com/Valloric/YouCompleteMe'
+" Plugin 'https://github.com/Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+
 Plugin 'https://github.com/craigemery/vim-autotag'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'Shougo/vimproc.vim'
+Plugin 'easymotion/vim-easymotion'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -136,15 +145,16 @@ syntax on
 "
 " Bunch of mappings
 nnoremap <silent> <F9> :TagbarToggle<CR>
-nnoremap <silent> <leader>fo :Unite outline -start-insert<CR>
-nnoremap <silent> <leader>fb :Unite buffer -start-insert<CR>
-nnoremap <silent> <leader>ft :Unite tag -start-insert<CR>
-nnoremap <silent> <leader>fcl :FufChangeList<CR>
+nnoremap <silent> <leader>fo :CtrlPBufTag<CR>
+nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
+nnoremap <silent> <leader>ft :CtrlPTag<CR>
+nnoremap <silent> <leader>fcl :CtrlPChange<CR>
 nnoremap <F12> :NERDTreeToggle<CR>
 let g:EclimPhpHtmlValidate=0
 let g:EclimPhpValidate=0
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:< 
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 set list
 set number
 set laststatus=2
@@ -166,4 +176,15 @@ let g:padawan#enabled=0
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
