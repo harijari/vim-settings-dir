@@ -13,12 +13,13 @@ call vundle#begin('~/.vim/Vundle/')
 " Plugin 'https://github.com/m2mdas/phpcomplete-extended.git'
 Plugin 'https://github.com/arnaud-lb/vim-php-namespace'
 Plugin 'https://github.com/stephpy/vim-php-cs-fixer'
-Plugin 'https://github.com/docteurklein/vim-symfony'
+"Plugin 'https://github.com/docteurklein/vim-symfony'
 " Plugin 'https://github.com/mkusher/padawan.vim'
 "Plugin 'https://github.com/vim-scripts/phpfolding.vim'
-Plugin 'https://github.com/shawncplus/phpcomplete.vim.git'
+"Plugin 'https://github.com/shawncplus/phpcomplete.vim.git'
 Plugin 'vim-php/vim-php-refactoring'
 Plugin 'vim-php/tagbar-phpctags.vim'
+Plugin 'brookhong/cscope.vim'
 
 " Drupal
 "Plugin 'http://git.drupal.org/project/vimrc.git', {'name': 'drupal-vim', 'rtp': 'bundle/vim-plugin-for-drupal' }
@@ -32,6 +33,10 @@ Plugin 'https://github.com/mattn/emmet-vim'
 
 " Latex
 Plugin 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+
+
+" Dockerfile
+Plugin 'ekalinin/Dockerfile.vim'
 
 
 " Javascript
@@ -63,12 +68,12 @@ Plugin 'tpope/vim-haml'
 Plugin 'https://github.com/tpope/vim-markdown'
 
 " Code search / navigation
-Plugin 'https://github.com/Shougo/unite-outline'
-Plugin 'https://github.com/Shougo/unite.vim'
-Plugin 'tsukkee/unite-tag'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'https://github.com/Shougo/unite-outline'
+"Plugin 'https://github.com/Shougo/unite.vim'
+"Plugin 'tsukkee/unite-tag'
+Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'git://github.com/harijari/FuzzyFinder.git'
-Plugin 'https://github.com/wincent/Command-T'
+"Plugin 'https://github.com/wincent/Command-T'
 Plugin 'https://github.com/scrooloose/nerdtree'
 Plugin 'https://github.com/majutsushi/tagbar'
 
@@ -76,15 +81,20 @@ Plugin 'https://github.com/majutsushi/tagbar'
 Plugin 'https://github.com/evidens/vim-twig.git'
 Plugin 'https://github.com/tokutake/twig-indent'
 
+" Ruby
+Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-bundler'
+
 " Json
 Plugin 'https://github.com/elzr/vim-json.git'
 
 " Text edit
 Plugin 'https://github.com/scrooloose/nerdcommenter'
 Plugin 'https://github.com/tmhedberg/matchit'
-Plugin 'https://github.com/terryma/vim-multiple-cursors'
 Plugin 'https://github.com/sickill/vim-pasta'
 Plugin 'https://github.com/garbas/vim-snipmate'
+Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'https://github.com/honza/vim-snippets'
 
 " Misc
@@ -131,7 +141,6 @@ filetype plugin on
 if has("syntax")
   syntax on
 endif
-d
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
@@ -161,21 +170,29 @@ set laststatus=2
 set et
 set sw=4
 
-let g:CommandTMaxFiles=40000
-let g:CommandTMaxDepth=25
 
 
 colorscheme wombat
+set hlsearch
+set incsearch
+set cindent
+set backspace=indent,eol,start
+set ruler
+set hidden
+
 
 
 let g:gitgutter_max_signs=5000
-let g:EclimCompletionMethod = 'omnifunc'
 let did_padawan_autoload=1
 let g:padawan#enabled=0
 
+" Eclimd settings - we want to use only completion.
+let g:EclimFileTypeValidate = 0
+let g:EclimCompletionMethod = 'omnifunc'
+
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
@@ -187,4 +204,8 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+
